@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chai Coffee Connect ☕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#8B4513",
+              secondary: "#D2B48C",
+              cream: "#F5F5DC",
+              deepred: "#8B0000",
+              darkbrown: "#5D4037",
+              lightbrown: "#A1887F",
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+          fontFamily: {
+            sans: ["Poppins", "sans-serif"],
+            pacifico: ['"Pacifico"', "serif"],
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+
+      body {
+          font-family: 'Poppins', sans-serif;
+          scroll-behavior: smooth;
+      }
+
+      .hero-section {
+          background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.2) 100%), url('https://readdy.ai/api/search-image?query=A%20cozy%20cafe%20exterior%20with%20warm%20lighting%2C%20wooden%20signage%20showing%20Chai%20Coffee%20Connect%2C%20inviting%20entrance%20with%20plants%20and%20outdoor%20seating%2C%20soft%20evening%20ambiance%2C%20warm%20color%20palette%20with%20browns%20and%20creams%2C%20photorealistic%20style%2C%20high-quality%20rendering%2C%20no%20people%2C%20perfect%20for%20website%20hero%20image&width=1600&height=900&seq=cafe-exterior&orientation=landscape');
+          background-size: cover;
+          background-position: center;
+      }
+
+      .coffee-table {
+          background-image: url('https://readdy.ai/api/search-image?query=Top-down%20view%20of%20a%20wooden%20coffee%20table%20with%20rich%20brown%20texture%2C%20soft%20lighting%2C%20minimalist%20style%2C%20clean%20surface%2C%20high-quality%20photorealistic%20rendering%2C%20perfect%20for%20website%20background&width=1200&height=800&seq=coffee-table&orientation=landscape');
+          background-size: cover;
+          background-position: center;
+      }
+
+      .interactive-item {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .interactive-item:hover {
+          transform: translateY(-10px) scale(1.05);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .menu-card {
+          transition: transform 0.5s ease;
+          transform-style: preserve-3d;
+      }
+
+      .menu-card:hover {
+          transform: rotateY(10deg);
+      }
+
+      .review-cube {
+          transform-style: preserve-3d;
+          animation: rotate 20s infinite linear;
+          position: relative;
+      }
+
+      @keyframes rotate {
+          0% { transform: rotateY(0deg) rotateX(10deg); }
+          100% { transform: rotateY(360deg) rotateX(10deg); }
+      }
+
+      .cube-face {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+      }
+
+      .face-front { transform: translateZ(150px); }
+      .face-back { transform: rotateY(180deg) translateZ(150px); }
+      .face-right { transform: rotateY(90deg) translateZ(150px); }
+      .face-left { transform: rotateY(-90deg) translateZ(150px); }
+
+      .gallery-carousel {
+          perspective: 1000px;
+      }
+
+      .carousel-item {
+          transition: transform 0.5s ease, opacity 0.5s ease;
+      }
+
+      .carousel-item.active {
+          transform: translateX(0) scale(1);
+          opacity: 1;
+          z-index: 10;
+      }
+
+      .carousel-item.prev {
+          transform: translateX(-50%) scale(0.8) rotateY(10deg);
+          opacity: 0.7;
+          z-index: 5;
+      }
+
+      .carousel-item.next {
+          transform: translateX(50%) scale(0.8) rotateY(-10deg);
+          opacity: 0.7;
+          z-index: 5;
+      }
+
+      .polaroid {
+          background: white;
+          padding: 15px 15px 40px 15px;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          transform: rotate(var(--rotation));
+          transition: transform 0.3s ease;
+      }
+
+      .polaroid:hover {
+          transform: rotate(var(--rotation)) scale(1.05);
+          z-index: 20;
+      }
+
+      .map-pin {
+          animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+      }
+
+      .social-float {
+          transition: transform 0.3s ease, background-color 0.3s ease;
+      }
+
+      .social-float:hover {
+          transform: translateY(-5px);
+      }
+
+      input:focus, textarea:focus {
+          outline: none;
+          border-color: #8B4513;
+          box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2);
+      }
+
+      .audio-toggle {
+          transition: transform 0.3s ease;
+      }
+
+      .audio-toggle:hover {
+          transform: scale(1.1);
+      }
+
+      .audio-toggle.active {
+          color: #8B4513;
+      }
+
+      .theme-toggle {
+          transition: transform 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+          transform: rotate(30deg);
+      }
+    </style>
+  </head>
+  <body class="bg-cream min-h-screen">
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 w-full bg-white bg-opacity-90 backdrop-blur-sm z-50 shadow-md"
+    >
+      <div
+        class="container mx-auto px-6 py-3 flex justify-between items-center"
+      >
+        <a href="#" class="font-['Pacifico'] text-primary text-2xl"
+          >Chai Coffee Connect</a
+        >
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a
+            href="#home"
+            class="text-darkbrown hover:text-primary transition-colors"
+            >Home</a
+          >
+          <a
+            href="#menu"
+            class="text-darkbrown hover:text-primary transition-colors"
+            >Menu</a
+          >
+          <a
+            href="#gallery"
+            class="text-darkbrown hover:text-primary transition-colors"
+            >Gallery</a
+          >
+          <a
+            href="#reviews"
+            class="text-darkbrown hover:text-primary transition-colors"
+            >Reviews</a
+          >
+          <a
+            href="#about"
+            class="text-darkbrown hover:text-primary transition-colors"
+            >About</a
+          >
+          <a
+            href="#visit"
+            class="text-darkbrown hover:text-primary transition-colors"
+            >Visit Us</a
+          >
+          <a
+            href="#contact"
+            class="text-darkbrown hover:text-primary transition-colors"
+            >Contact</a
+          >
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <button
+            id="audioToggle"
+            class="audio-toggle w-10 h-10 flex items-center justify-center text-darkbrown rounded-full hover:bg-gray-100"
+          >
+            <i class="ri-volume-mute-line ri-lg"></i>
+          </button>
+
+          <button
+            id="themeToggle"
+            class="theme-toggle w-10 h-10 flex items-center justify-center text-darkbrown rounded-full hover:bg-gray-100"
+          >
+            <i class="ri-sun-line ri-lg"></i>
+          </button>
+
+          <button
+            id="mobileMenuToggle"
+            class="md:hidden w-10 h-10 flex items-center justify-center text-darkbrown rounded-full hover:bg-gray-100"
+          >
+            <i class="ri-menu-line ri-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-white shadow-lg absolute w-full"
+      >
+        <div class="container mx-auto px-6 py-3 flex flex-col space-y-4">
+          <a
+            href="#home"
+            class="text-darkbrown hover:text-primary transition-colors py-2"
+            >Home</a
+          >
+          <a
+            href="#menu"
+            class="text-darkbrown hover:text-primary transition-colors py-2"
+            >Menu</a
+          >
+          <a
+            href="#gallery"
+            class="text-darkbrown hover:text-primary transition-colors py-2"
+            >Gallery</a
+          >
+          <a
+            href="#reviews"
+            class="text-darkbrown hover:text-primary transition-colors py-2"
+            >Reviews</a
+          >
+          <a
+            href="#about"
+            class="text-darkbrown hover:text-primary transition-colors py-2"
+            >About</a
+          >
+          <a
+            href="#visit"
+            class="text-darkbrown hover:text-primary transition-colors py-2"
+            >Visit Us</a
+          >
+          <a
+            href="#contact"
+            class="text-darkbrown hover:text-primary transition-colors py-2"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section - Landing Scene -->
+    <section
+      id="landing"
+      class="hero-section h-screen flex items-center relative"
+    >
+      <div class="container mx-auto px-6 w-full">
+        <div class="max-w-2xl text-white">
+          <h1 class="font-['Pacifico'] text-5xl md:text-6xl mb-6">
+            Chai Coffee Connect
+          </h1>
+          <p class="text-xl mb-8">
+            Experience the perfect blend of tradition and comfort in every cup.
+            Where conversations brew and memories steep.
+          </p>
+          <a
+            href="#home"
+            class="bg-primary hover:bg-darkbrown text-white px-8 py-4 rounded-button text-lg font-medium inline-flex items-center transition-all duration-300 transform hover:scale-105 whitespace-nowrap"
+          >
+            <span>Enter Cafe</span>
+            <i class="ri-arrow-right-line ml-2"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Ambient particles effect -->
+      <div id="particles" class="absolute inset-0 pointer-events-none"></div>
+    </section>
+
+    <!-- Home Section - Interactive Table -->
+    <section id="home" class="min-h-screen py-24 bg-cream">
+      <div class="container mx-auto px-6">
+        <h2 class="font-['Pacifico'] text-4xl text-primary text-center mb-16">
+          Welcome to Our Cafe
+        </h2>
+
+        <div
+          class="coffee-table rounded-lg shadow-xl max-w-4xl mx-auto aspect-[3/2] relative p-8"
+        >
+          <div class="grid grid-cols-2 gap-8 h-full">
+            <!-- Menu Card -->
+            <div
+              class="interactive-item menu-card bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center"
+            >
+              <div
+                class="w-16 h-16 flex items-center justify-center text-primary mb-4"
+              >
+                <i class="ri-book-open-line ri-2x"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-darkbrown mb-2">
+                Our Menu
+              </h3>
+              <p class="text-gray-600 text-center mb-4">
+                Explore our delicious offerings
+              </p>
+              <a
+                href="#menu"
+                class="text-primary hover:text-darkbrown font-medium"
+                >View Menu</a
+              >
+            </div>
+
+            <!-- Coffee Mug - Sound Toggle -->
+            <div
+              id="coffeeSound"
+              class="interactive-item bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center"
+            >
+              <div
+                class="w-16 h-16 flex items-center justify-center text-primary mb-4"
+              >
+                <i class="ri-cup-line ri-2x"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-darkbrown mb-2">
+                Ambient Sounds
+              </h3>
+              <p class="text-gray-600 text-center mb-4">
+                Toggle cafe atmosphere
+              </p>
+              <button
+                class="text-primary hover:text-darkbrown font-medium flex items-center"
+              >
+                <span id="soundStatus">Turn On</span>
+                <i class="ri-volume-up-line ml-2"></i>
+              </button>
+            </div>
+
+            <!-- Notebook - Reviews -->
+            <div
+              class="interactive-item bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center"
+            >
+              <div
+                class="w-16 h-16 flex items-center justify-center text-primary mb-4"
+              >
+                <i class="ri-chat-quote-line ri-2x"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-darkbrown mb-2">
+                Customer Reviews
+              </h3>
+              <p class="text-gray-600 text-center mb-4">
+                See what others are saying
+              </p>
+              <a
+                href="#reviews"
+                class="text-primary hover:text-darkbrown font-medium"
+                >Read Reviews</a
+              >
+            </div>
+
+            <!-- Phone - Social Links -->
+            <div
+              class="interactive-item bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center"
+            >
+              <div
+                class="w-16 h-16 flex items-center justify-center text-primary mb-4"
+              >
+                <i class="ri-smartphone-line ri-2x"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-darkbrown mb-2">
+                Connect With Us
+              </h3>
+              <p class="text-gray-600 text-center mb-4">
+                Follow us on social media
+              </p>
+              <div class="flex space-x-4">
+                <a href="#" class="text-primary hover:text-darkbrown">
+                  <i class="ri-instagram-line ri-lg"></i>
+                </a>
+                <a href="#" class="text-primary hover:text-darkbrown">
+                  <i class="ri-whatsapp-line ri-lg"></i>
+                </a>
+                <a href="#" class="text-primary hover:text-darkbrown">
+                  <i class="ri-facebook-circle-line ri-lg"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="min-h-screen py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <h2 class="font-['Pacifico'] text-4xl text-primary text-center mb-16">
+          Our Menu
+        </h2>
+
+        <!-- Menu Tabs -->
+        <div class="max-w-4xl mx-auto mb-12">
+          <div class="flex justify-center mb-8">
+            <div class="inline-flex bg-gray-100 p-1 rounded-full">
+              <button
+                class="menu-tab active px-6 py-2 rounded-full bg-primary text-white whitespace-nowrap"
+                data-tab="tea"
+              >
+                Tea
+              </button>
+              <button
+                class="menu-tab px-6 py-2 rounded-full text-darkbrown whitespace-nowrap"
+                data-tab="coffee"
+              >
+                Coffee
+              </button>
+              <button
+                class="menu-tab px-6 py-2 rounded-full text-darkbrown whitespace-nowrap"
+                data-tab="snacks"
+              >
+                Snacks
+              </button>
+              <button
+                class="menu-tab px-6 py-2 rounded-full text-darkbrown whitespace-nowrap"
+                data-tab="combos"
+              >
+                Combos
+              </button>
+            </div>
+          </div>
+
+          <!-- 3D Menu Book -->
+          <div
+            class="bg-white rounded-lg shadow-xl overflow-hidden perspective-menu"
+          >
+            <!-- Tea Menu -->
+            <div id="tea-menu" class="menu-content active">
+              <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Masala Chai
+                      </h3>
+                      <span class="text-primary font-bold">₹60</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Our signature blend of aromatic spices with premium Assam
+                      tea leaves.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-deepred bg-opacity-20 text-deepred text-xs px-2 py-1 rounded-full"
+                        >Hot</span
+                      >
+                      <span class="ml-2 text-amber-600">
+                        <i class="ri-fire-line"></i>
+                        <i class="ri-fire-line"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Ginger Lemon Tea
+                      </h3>
+                      <span class="text-primary font-bold">₹70</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Refreshing blend of fresh ginger, lemon and honey with
+                      black tea.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full"
+                        >Healthy</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Kashmiri Pink Tea
+                      </h3>
+                      <span class="text-primary font-bold">₹90</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Traditional pink tea with cardamom, cinnamon and
+                      pistachios.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full"
+                        >Premium</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Iced Lemon Tea
+                      </h3>
+                      <span class="text-primary font-bold">₹80</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Chilled black tea with fresh lemon juice and mint leaves.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full"
+                        >Cold</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Coffee Menu -->
+            <div id="coffee-menu" class="menu-content hidden">
+              <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Espresso
+                      </h3>
+                      <span class="text-primary font-bold">₹80</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Single shot of our premium dark roast coffee blend.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-deepred bg-opacity-20 text-deepred text-xs px-2 py-1 rounded-full"
+                        >Strong</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Cappuccino
+                      </h3>
+                      <span class="text-primary font-bold">₹120</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Espresso with steamed milk and a thick layer of foam.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full"
+                        >Popular</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Cold Brew
+                      </h3>
+                      <span class="text-primary font-bold">₹150</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Slow-steeped for 18 hours, served over ice with a hint of
+                      vanilla.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full"
+                        >Cold</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Mocha
+                      </h3>
+                      <span class="text-primary font-bold">₹140</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Espresso with steamed milk, chocolate syrup and whipped
+                      cream.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-full"
+                        >Sweet</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Snacks Menu -->
+            <div id="snacks-menu" class="menu-content hidden">
+              <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Samosa
+                      </h3>
+                      <span class="text-primary font-bold">₹40</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Crispy pastry filled with spiced potatoes and peas.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-deepred bg-opacity-20 text-deepred text-xs px-2 py-1 rounded-full"
+                        >Spicy</span
+                      >
+                      <span class="ml-2 text-amber-600">
+                        <i class="ri-fire-line"></i>
+                        <i class="ri-fire-line"></i>
+                        <i class="ri-fire-line"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Chocolate Croissant
+                      </h3>
+                      <span class="text-primary font-bold">₹90</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Buttery, flaky croissant filled with rich chocolate.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-full"
+                        >Sweet</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Paneer Sandwich
+                      </h3>
+                      <span class="text-primary font-bold">₹120</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Grilled sandwich with spiced cottage cheese and
+                      vegetables.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full"
+                        >Vegetarian</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Cookies Platter
+                      </h3>
+                      <span class="text-primary font-bold">₹150</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Assortment of freshly baked cookies - chocolate chip,
+                      oatmeal and almond.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full"
+                        >Shareable</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Combos Menu -->
+            <div id="combos-menu" class="menu-content hidden">
+              <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Chai-Samosa Combo
+                      </h3>
+                      <span class="text-primary font-bold">₹90</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Classic masala chai with two pieces of samosa and mint
+                      chutney.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full"
+                        >Bestseller</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Coffee & Croissant
+                      </h3>
+                      <span class="text-primary font-bold">₹180</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Cappuccino with a butter or chocolate croissant of your
+                      choice.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full"
+                        >Premium</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Breakfast Special
+                      </h3>
+                      <span class="text-primary font-bold">₹250</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Any tea or coffee with sandwich and a cookie of your
+                      choice.
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full"
+                        >Value Meal</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="menu-item bg-cream rounded-lg p-6 transform transition-transform hover:scale-105"
+                  >
+                    <div class="flex justify-between items-start mb-4">
+                      <h3 class="text-xl font-semibold text-darkbrown">
+                        Group Platter
+                      </h3>
+                      <span class="text-primary font-bold">₹599</span>
+                    </div>
+                    <p class="text-gray-600 mb-3">
+                      Four beverages of your choice with assorted snacks platter
+                      (serves 4).
+                    </p>
+                    <div class="flex items-center">
+                      <span
+                        class="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full"
+                        >Shareable</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="min-h-screen py-24 bg-cream">
+      <div class="container mx-auto px-6">
+        <h2 class="font-['Pacifico'] text-4xl text-primary text-center mb-16">
+          Our Gallery
+        </h2>
+
+        <div class="gallery-carousel max-w-4xl mx-auto relative">
+          <!-- Carousel Items -->
+          <div class="flex justify-center items-center h-[500px] relative">
+            <div class="carousel-item active absolute w-full max-w-lg">
+              <div class="bg-white p-4 rounded-lg shadow-lg">
+                <img
+                  src="https://readdy.ai/api/search-image?query=A%20cozy%20cafe%20interior%20with%20warm%20lighting%2C%20wooden%20tables%2C%20comfortable%20seating%2C%20coffee%20cups%20on%20tables%2C%20pastries%20displayed%2C%20people%20enjoying%20conversations%2C%20warm%20color%20palette%20with%20browns%20and%20creams%2C%20photorealistic%20style&width=800&height=600&seq=cafe-interior-1&orientation=landscape"
+                  alt="Cafe Interior"
+                  class="w-full h-80 object-cover object-top rounded-lg mb-4"
+                />
+                <p class="text-darkbrown text-center font-medium">
+                  Our cozy interior space
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-item next absolute w-full max-w-lg">
+              <div class="bg-white p-4 rounded-lg shadow-lg">
+                <img
+                  src="https://readdy.ai/api/search-image?query=Close-up%20of%20beautifully%20crafted%20coffee%20art%20on%20a%20latte%2C%20rich%20creamy%20texture%2C%20artistic%20design%20in%20the%20foam%2C%20served%20in%20an%20elegant%20cup%20on%20a%20wooden%20table%2C%20warm%20cafe%20lighting%2C%20photorealistic%20style&width=800&height=600&seq=coffee-art&orientation=landscape"
+                  alt="Coffee Art"
+                  class="w-full h-80 object-cover object-top rounded-lg mb-4"
+                />
+                <p class="text-darkbrown text-center font-medium">
+                  Our signature latte art
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-item prev absolute w-full max-w-lg">
+              <div class="bg-white p-4 rounded-lg shadow-lg">
+                <img
+                  src="https://readdy.ai/api/search-image?query=Assortment%20of%20freshly%20baked%20pastries%20and%20desserts%20on%20display%2C%20variety%20of%20cookies%2C%20croissants%2C%20and%20cakes%2C%20beautifully%20arranged%20on%20wooden%20trays%2C%20warm%20cafe%20lighting%2C%20photorealistic%20style&width=800&height=600&seq=pastries&orientation=landscape"
+                  alt="Pastries"
+                  class="w-full h-80 object-cover object-top rounded-lg mb-4"
+                />
+                <p class="text-darkbrown text-center font-medium">
+                  Our freshly baked pastries
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="flex justify-center mt-8 space-x-4">
+            <button
+              id="prevBtn"
+              class="w-12 h-12 flex items-center justify-center bg-white text-primary rounded-full shadow-md hover:bg-primary hover:text-white transition-colors !rounded-button"
+            >
+              <i class="ri-arrow-left-s-line ri-lg"></i>
+            </button>
+
+            <div class="flex space-x-2">
+              <button
+                class="carousel-dot active w-3 h-3 rounded-full bg-primary"
+              ></button>
+              <button
+                class="carousel-dot w-3 h-3 rounded-full bg-gray-300"
+              ></button>
+              <button
+                class="carousel-dot w-3 h-3 rounded-full bg-gray-300"
+              ></button>
+              <button
+                class="carousel-dot w-3 h-3 rounded-full bg-gray-300"
+              ></button>
+              <button
+                class="carousel-dot w-3 h-3 rounded-full bg-gray-300"
+              ></button>
+            </div>
+
+            <button
+              id="nextBtn"
+              class="w-12 h-12 flex items-center justify-center bg-white text-primary rounded-full shadow-md hover:bg-primary hover:text-white transition-colors !rounded-button"
+            >
+              <i class="ri-arrow-right-s-line ri-lg"></i>
+            </button>
+          </div>
+
+          <!-- 360 Tour Button -->
+          <div class="text-center mt-12">
+            <button
+              class="bg-primary hover:bg-darkbrown text-white px-6 py-3 rounded-button inline-flex items-center transition-all duration-300 !rounded-button whitespace-nowrap"
+            >
+              <i class="ri-360-view-line mr-2"></i>
+              <span>View 360° Tour</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="min-h-screen py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <h2 class="font-['Pacifico'] text-4xl text-primary text-center mb-16">
+          Customer Reviews
+        </h2>
+
+        <div class="max-w-4xl mx-auto text-center mb-12">
+          <div class="flex justify-center items-center mb-6">
+            <div class="text-amber-400 text-3xl mr-3">
+              <i class="ri-star-fill"></i>
+              <i class="ri-star-fill"></i>
+              <i class="ri-star-fill"></i>
+              <i class="ri-star-fill"></i>
+              <i class="ri-star-half-fill"></i>
+            </div>
+            <span class="text-3xl font-bold text-darkbrown">4.9</span>
+          </div>
+          <p class="text-gray-600">Based on 26+ reviews</p>
+        </div>
+
+        <!-- 3D Review Cube -->
+        <div
+          class="max-w-3xl mx-auto h-[400px] flex items-center justify-center"
+        >
+          <div class="review-cube w-[300px] h-[300px] relative">
+            <!-- Front Face -->
+            <div class="cube-face face-front bg-white rounded-lg shadow-lg p-6">
+              <div class="flex items-start mb-4">
+                <div
+                  class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mr-4"
+                >
+                  <span class="font-semibold">AR</span>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-darkbrown">Aditya Rao</h3>
+                  <div class="text-amber-400 text-sm">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-600">
+                "The masala chai here is absolutely perfect! Just the right
+                blend of spices that reminds me of my grandmother's recipe. The
+                ambiance is cozy and staff is very friendly. My new favorite
+                spot in Greater Noida!"
+              </p>
+            </div>
+
+            <!-- Back Face -->
+            <div class="cube-face face-back bg-white rounded-lg shadow-lg p-6">
+              <div class="flex items-start mb-4">
+                <div
+                  class="w-12 h-12 rounded-full bg-secondary text-white flex items-center justify-center mr-4"
+                >
+                  <span class="font-semibold">SK</span>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-darkbrown">Sanya Kapoor</h3>
+                  <div class="text-amber-400 text-sm">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-600">
+                "Perfect place to work remotely! The WiFi is fast, the coffee is
+                excellent, and they don't mind if you sit for hours. I love
+                their cold brew and chocolate croissants. The staff remembers
+                regular customers which is a nice touch."
+              </p>
+            </div>
+
+            <!-- Right Face -->
+            <div class="cube-face face-right bg-white rounded-lg shadow-lg p-6">
+              <div class="flex items-start mb-4">
+                <div
+                  class="w-12 h-12 rounded-full bg-deepred text-white flex items-center justify-center mr-4"
+                >
+                  <span class="font-semibold">RK</span>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-darkbrown">Rahul Kumar</h3>
+                  <div class="text-amber-400 text-sm">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-half-fill"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-600">
+                "The chai-samosa combo is unbeatable! I stop by almost every
+                evening after work. The samosas are always fresh and crispy.
+                Only suggestion would be to extend their closing hours on
+                weekends. Otherwise, perfect!"
+              </p>
+            </div>
+
+            <!-- Left Face -->
+            <div class="cube-face face-left bg-white rounded-lg shadow-lg p-6">
+              <div class="flex items-start mb-4">
+                <div
+                  class="w-12 h-12 rounded-full bg-lightbrown text-white flex items-center justify-center mr-4"
+                >
+                  <span class="font-semibold">NP</span>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-darkbrown">Neha Patel</h3>
+                  <div class="text-amber-400 text-sm">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-600">
+                "I hosted a small birthday gathering here and the staff was
+                incredibly accommodating! They arranged a beautiful setup and
+                the Group Platter was perfect. Everyone loved the Kashmiri Pink
+                Tea. Highly recommend for small celebrations!"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review Controls -->
+        <div class="flex justify-center mt-12">
+          <button
+            id="pauseReviews"
+            class="bg-white hover:bg-gray-100 text-primary px-6 py-3 rounded-button shadow-md inline-flex items-center transition-all duration-300 !rounded-button whitespace-nowrap"
+          >
+            <i class="ri-pause-line mr-2"></i>
+            <span>Pause Rotation</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="min-h-screen py-24 bg-cream">
+      <div class="container mx-auto px-6">
+        <h2 class="font-['Pacifico'] text-4xl text-primary text-center mb-16">
+          Our Story
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+          <div class="flex flex-col md:flex-row items-center mb-16">
+            <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+              <p class="text-gray-700 mb-6 leading-relaxed">
+                Founded in 2020, Chai Coffee Connect began with a simple vision:
+                to create a space where traditional chai culture meets
+                contemporary coffee craftsmanship.
+              </p>
+
+              <p class="text-gray-700 mb-6 leading-relaxed">
+                Our founders, Arjun and Meera, wanted to bring the warmth of
+                their family's chai recipes to a modern setting, while also
+                celebrating the artistry of specialty coffee.
+              </p>
+
+              <p class="text-gray-700 leading-relaxed">
+                Today, we're proud to be a community hub where neighbors become
+                friends over steaming cups and meaningful conversations.
+              </p>
+            </div>
+
+            <div class="md:w-1/2 flex justify-center">
+              <div class="polaroid" style="--rotation: -5deg">
+                <img
+                  src="https://readdy.ai/api/search-image?query=Two%20cafe%20owners%2C%20Indian%20man%20and%20woman%20in%20their%2030s%2C%20standing%20proudly%20in%20front%20of%20their%20cafe%20counter%2C%20warm%20lighting%2C%20cafe%20interior%20with%20chai%20and%20coffee%20equipment%20visible%20in%20background%2C%20friendly%20smiles%2C%20casual%20professional%20attire%2C%20photorealistic%20style&width=400&height=400&seq=founders&orientation=squarish"
+                  alt="Our Founders"
+                  class="w-64 h-64 object-cover object-top"
+                />
+                <p class="text-center mt-2 text-darkbrown">
+                  Our Founders: Arjun & Meera
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Values -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div
+                class="w-16 h-16 flex items-center justify-center text-primary mb-4 mx-auto"
+              >
+                <i class="ri-heart-line ri-2x"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-darkbrown text-center mb-4">
+                Community
+              </h3>
+              <p class="text-gray-600 text-center">
+                We believe in creating spaces where people can connect, share
+                ideas, and build relationships.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div
+                class="w-16 h-16 flex items-center justify-center text-primary mb-4 mx-auto"
+              >
+                <i class="ri-leaf-line ri-2x"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-darkbrown text-center mb-4">
+                Quality
+              </h3>
+              <p class="text-gray-600 text-center">
+                We source the finest ingredients and prepare everything with
+                care and attention to detail.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div
+                class="w-16 h-16 flex items-center justify-center text-primary mb-4 mx-auto"
+              >
+                <i class="ri-recycle-line ri-2x"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-darkbrown text-center mb-4">
+                Sustainability
+              </h3>
+              <p class="text-gray-600 text-center">
+                We're committed to eco-friendly practices, from compostable
+                packaging to reducing food waste.
+              </p>
+            </div>
+          </div>
+
+          <!-- Polaroid Gallery -->
+          <div class="flex flex-wrap justify-center">
+            <div class="polaroid m-4" style="--rotation: 3deg">
+              <img
+                src="https://readdy.ai/api/search-image?query=Close-up%20of%20hands%20preparing%20traditional%20Indian%20chai%2C%20adding%20spices%20to%20a%20pot%2C%20steam%20rising%2C%20warm%20lighting%2C%20authentic%20preparation%2C%20photorealistic%20style&width=300&height=300&seq=chai-making&orientation=squarish"
+                alt="Chai Making"
+                class="w-48 h-48 object-cover object-top"
+              />
+              <p class="text-center mt-2 text-darkbrown">
+                Traditional Chai Making
+              </p>
+            </div>
+
+            <div class="polaroid m-4" style="--rotation: -2deg">
+              <img
+                src="https://readdy.ai/api/search-image?query=Barista%20creating%20latte%20art%2C%20top%20view%20of%20hands%20pouring%20milk%20into%20coffee%2C%20creating%20a%20leaf%20design%2C%20professional%20coffee%20preparation%2C%20warm%20cafe%20lighting%2C%20photorealistic%20style&width=300&height=300&seq=coffee-making&orientation=squarish"
+                alt="Coffee Art"
+                class="w-48 h-48 object-cover object-top"
+              />
+              <p class="text-center mt-2 text-darkbrown">
+                Coffee Craftsmanship
+              </p>
+            </div>
+
+            <div class="polaroid m-4" style="--rotation: 5deg">
+              <img
+                src="https://readdy.ai/api/search-image?query=Cafe%20community%20event%2C%20people%20gathered%20around%20tables%20engaged%20in%20conversation%2C%20board%20games%20visible%2C%20warm%20lighting%2C%20cozy%20atmosphere%2C%20diverse%20group%20of%20customers%2C%20photorealistic%20style&width=300&height=300&seq=community&orientation=squarish"
+                alt="Community Event"
+                class="w-48 h-48 object-cover object-top"
+              />
+              <p class="text-center mt-2 text-darkbrown">Community Events</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visit Us Section -->
+    <section id="visit" class="min-h-screen py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <h2 class="font-['Pacifico'] text-4xl text-primary text-center mb-16">
+          Visit Us
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+          <!-- Status Bar -->
+          <div
+            class="bg-cream rounded-lg p-4 flex justify-between items-center mb-8 shadow-md"
+          >
+            <div class="flex items-center">
+              <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+              <span class="text-darkbrown font-medium">Open Now</span>
+            </div>
+
+            <div class="text-gray-600">Today's Hours: 8:00 AM - 10:00 PM</div>
+          </div>
+
+          <!-- Map -->
+          <div
+            class="rounded-lg overflow-hidden shadow-xl mb-12 relative h-[400px]"
+            style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-size: cover; background-position: center;"
+          >
+            <!-- Animated Pin -->
+            <div
+              class="map-pin absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            >
+              <div
+                class="w-12 h-12 flex items-center justify-center bg-primary text-white rounded-full shadow-lg"
+              >
+                <i class="ri-map-pin-2-fill ri-lg"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address and Hours -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-cream rounded-lg p-6 shadow-md">
+              <h3 class="text-xl font-semibold text-darkbrown mb-4">Address</h3>
+              <p class="text-gray-700 mb-4">
+                Shop no. 44, 7th Avenue Market,<br />Gaur City 1, Greater
+                Noida,<br />Uttar Pradesh, India
+              </p>
+
+              <div class="flex space-x-4 mt-6">
+                <a
+                  href="#"
+                  class="bg-primary hover:bg-darkbrown text-white px-4 py-2 rounded-button inline-flex items-center transition-colors !rounded-button whitespace-nowrap"
+                >
+                  <i class="ri-direction-line mr-2"></i>
+                  <span>Get Directions</span>
+                </a>
+
+                <a
+                  href="tel:+919876543210"
+                  class="bg-white border border-primary hover:bg-primary text-primary hover:text-white px-4 py-2 rounded-button inline-flex items-center transition-colors !rounded-button whitespace-nowrap"
+                >
+                  <i class="ri-phone-line mr-2"></i>
+                  <span>Call Us</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="bg-cream rounded-lg p-6 shadow-md">
+              <h3 class="text-xl font-semibold text-darkbrown mb-4">
+                Opening Hours
+              </h3>
+              <ul class="space-y-2 text-gray-700">
+                <li class="flex justify-between">
+                  <span>Monday - Friday</span>
+                  <span>8:00 AM - 10:00 PM</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>Saturday</span>
+                  <span>9:00 AM - 11:00 PM</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>Sunday</span>
+                  <span>9:00 AM - 9:00 PM</span>
+                </li>
+              </ul>
+
+              <div
+                class="mt-6 p-3 bg-white rounded-lg border-l-4 border-primary"
+              >
+                <p class="text-darkbrown">
+                  <span class="font-semibold">Note:</span> We may close early on
+                  public holidays. Please check our social media for updates.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen py-24 bg-cream">
+      <div class="container mx-auto px-6">
+        <h2 class="font-['Pacifico'] text-4xl text-primary text-center mb-16">
+          Contact Us
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div
+              class="bg-white rounded-lg shadow-xl p-8 transform transition-transform hover:scale-[1.02]"
+            >
+              <h3 class="text-2xl font-semibold text-darkbrown mb-6">
+                Send us a message
+              </h3>
+
+              <form>
+                <div class="mb-6">
+                  <label for="name" class="block text-gray-700 mb-2"
+                    >Your Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:border-primary bg-cream"
+                    placeholder="John Doe"
+                  />
+                </div>
+
+                <div class="mb-6">
+                  <label for="email" class="block text-gray-700 mb-2"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:border-primary bg-cream"
+                    placeholder="john@example.com"
+                  />
+                </div>
+
+                <div class="mb-6">
+                  <label for="subject" class="block text-gray-700 mb-2"
+                    >Subject</label
+                  >
+                  <input
+                    type="text"
+                    id="subject"
+                    class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:border-primary bg-cream"
+                    placeholder="Reservation / Feedback / Query"
+                  />
+                </div>
+
+                <div class="mb-6">
+                  <label for="message" class="block text-gray-700 mb-2"
+                    >Your Message</label
+                  >
+                  <textarea
+                    id="message"
+                    rows="4"
+                    class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:border-primary bg-cream"
+                    placeholder="Write your message here..."
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  class="w-full bg-primary hover:bg-darkbrown text-white py-3 rounded-button font-medium transition-colors !rounded-button whitespace-nowrap"
+                >
+                  Send Message
+                </button>
+              </form>
+            </div>
+
+            <!-- Social Links -->
+            <div>
+              <h3 class="text-2xl font-semibold text-darkbrown mb-6">
+                Connect With Us
+              </h3>
+
+              <div class="grid grid-cols-1 gap-6">
+                <a
+                  href="#"
+                  class="social-float flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg"
+                >
+                  <div
+                    class="w-12 h-12 flex items-center justify-center bg-[#E1306C] text-white rounded-full mr-4"
+                  >
+                    <i class="ri-instagram-fill ri-lg"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-darkbrown">Instagram</h4>
+                    <p class="text-gray-600">@chaicoffeeconnect</p>
+                  </div>
+                </a>
+
+                <a
+                  href="#"
+                  class="social-float flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg"
+                >
+                  <div
+                    class="w-12 h-12 flex items-center justify-center bg-[#25D366] text-white rounded-full mr-4"
+                  >
+                    <i class="ri-whatsapp-fill ri-lg"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-darkbrown">WhatsApp</h4>
+                    <p class="text-gray-600">+91 98765 43210</p>
+                  </div>
+                </a>
+
+                <a
+                  href="#"
+                  class="social-float flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg"
+                >
+                  <div
+                    class="w-12 h-12 flex items-center justify-center bg-[#4267B2] text-white rounded-full mr-4"
+                  >
+                    <i class="ri-facebook-fill ri-lg"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-darkbrown">Facebook</h4>
+                    <p class="text-gray-600">@chaicoffeeconnect</p>
+                  </div>
+                </a>
+
+                <a
+                  href="mailto:hello@chaicoffeeconnect.com"
+                  class="social-float flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg"
+                >
+                  <div
+                    class="w-12 h-12 flex items-center justify-center bg-primary text-white rounded-full mr-4"
+                  >
+                    <i class="ri-mail-fill ri-lg"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-darkbrown">Email</h4>
+                    <p class="text-gray-600">hello@chaicoffeeconnect.com</p>
+                  </div>
+                </a>
+              </div>
+
+              <div class="mt-8 p-6 bg-white rounded-lg shadow-md">
+                <h4 class="font-semibold text-darkbrown mb-4">
+                  Book for Events
+                </h4>
+                <p class="text-gray-700 mb-4">
+                  We offer space for small gatherings, book clubs, and corporate
+                  events. Contact us for details and availability.
+                </p>
+                <a
+                  href="#"
+                  class="text-primary hover:text-darkbrown font-medium inline-flex items-center"
+                >
+                  <span>Learn More</span>
+                  <i class="ri-arrow-right-line ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darkbrown text-white py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <h3 class="font-['Pacifico'] text-2xl mb-4">Chai Coffee Connect</h3>
+            <p class="text-gray-300 mb-4">
+              Where conversations brew and memories steep.
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-300 hover:text-white">
+                <i class="ri-instagram-line ri-lg"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-white">
+                <i class="ri-whatsapp-line ri-lg"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-white">
+                <i class="ri-facebook-circle-line ri-lg"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-white">
+                <i class="ri-mail-line ri-lg"></i>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li>
+                <a href="#home" class="text-gray-300 hover:text-white">Home</a>
+              </li>
+              <li>
+                <a href="#menu" class="text-gray-300 hover:text-white">Menu</a>
+              </li>
+              <li>
+                <a href="#gallery" class="text-gray-300 hover:text-white"
+                  >Gallery</a
+                >
+              </li>
+              <li>
+                <a href="#about" class="text-gray-300 hover:text-white"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a href="#contact" class="text-gray-300 hover:text-white"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Opening Hours</h4>
+            <ul class="space-y-2 text-gray-300">
+              <li class="flex justify-between">
+                <span>Mon - Fri:</span>
+                <span>8:00 AM - 10:00 PM</span>
+              </li>
+              <li class="flex justify-between">
+                <span>Saturday:</span>
+                <span>9:00 AM - 11:00 PM</span>
+              </li>
+              <li class="flex justify-between">
+                <span>Sunday:</span>
+                <span>9:00 AM - 9:00 PM</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+            <p class="text-gray-300 mb-4">
+              Subscribe to get updates on events and offers.
+            </p>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="Your email"
+                class="px-4 py-2 rounded-l-lg border-none focus:outline-none text-darkbrown w-full"
+              />
+              <button
+                type="submit"
+                class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-r-lg !rounded-button whitespace-nowrap"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-gray-700 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-400 mb-4 md:mb-0">
+            © 2025 Chai Coffee Connect. All rights reserved.
+          </p>
+
+          <div class="flex items-center space-x-4">
+            <span class="text-gray-400">We Accept:</span>
+            <i class="ri-visa-fill ri-lg text-gray-300"></i>
+            <i class="ri-mastercard-fill ri-lg text-gray-300"></i>
+            <i class="ri-paypal-fill ri-lg text-gray-300"></i>
+            <i class="ri-google-pay-fill ri-lg text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Audio Player (Hidden) -->
+    <audio id="cafeAmbience" loop>
+      <source src="#" type="audio/mpeg" />
+    </audio>
+    <!-- Scripts -->
+    <script id="navigationScript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        mobileMenuToggle.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", function () {
+            mobileMenu.classList.add("hidden");
+          });
+        });
+
+        // Smooth scrolling for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80, // Adjust for fixed header
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+      });
+    </script>
+
+    <script id="audioToggleScript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const audioToggle = document.getElementById("audioToggle");
+        const coffeeSound = document.getElementById("coffeeSound");
+        const soundStatus = document.getElementById("soundStatus");
+        const audioElement = document.getElementById("cafeAmbience");
+
+        let isPlaying = false;
+
+        function toggleAudio() {
+          if (isPlaying) {
+            audioElement.pause();
+            audioToggle.innerHTML = '<i class="ri-volume-mute-line ri-lg"></i>';
+            soundStatus.textContent = "Turn On";
+            audioToggle.classList.remove("active");
+          } else {
+            // In a real implementation, this would be a valid audio URL
+            // audioElement.src = 'path/to/cafe-ambience.mp3';
+            audioElement.play().catch((e) => console.log("Audio play failed:", e));
+            audioToggle.innerHTML = '<i class="ri-volume-up-line ri-lg"></i>';
+            soundStatus.textContent = "Turn Off";
+            audioToggle.classList.add("active");
+          }
+          isPlaying = !isPlaying;
+        }
+
+        audioToggle.addEventListener("click", toggleAudio);
+        coffeeSound.addEventListener("click", toggleAudio);
+      });
+    </script>
+
+    <script id="themeToggleScript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("themeToggle");
+        const htmlElement = document.documentElement;
+
+        let isDarkMode = false;
+
+        themeToggle.addEventListener("click", function () {
+          if (isDarkMode) {
+            htmlElement.classList.remove("dark");
+            themeToggle.innerHTML = '<i class="ri-sun-line ri-lg"></i>';
+          } else {
+            htmlElement.classList.add("dark");
+            themeToggle.innerHTML = '<i class="ri-moon-line ri-lg"></i>';
+          }
+          isDarkMode = !isDarkMode;
+        });
+      });
+    </script>
+
+    <script id="menuTabsScript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuTabs = document.querySelectorAll(".menu-tab");
+        const menuContents = document.querySelectorAll(".menu-content");
+
+        menuTabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            // Remove active class from all tabs
+            menuTabs.forEach((t) => {
+              t.classList.remove("active", "bg-primary", "text-white");
+              t.classList.add("text-darkbrown");
+            });
+
+            // Add active class to clicked tab
+            this.classList.add("active", "bg-primary", "text-white");
+            this.classList.remove("text-darkbrown");
+
+            // Hide all content
+            menuContents.forEach((content) => {
+              content.classList.add("hidden");
+              content.classList.remove("active");
+            });
+
+            // Show corresponding content
+            const tabId = this.getAttribute("data-tab");
+            const activeContent = document.getElementById(`${tabId}-menu`);
+            activeContent.classList.remove("hidden");
+            activeContent.classList.add("active");
+          });
+        });
+      });
+    </script>
+
+    <script id="galleryCarouselScript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const carouselItems = document.querySelectorAll(".carousel-item");
+        const carouselDots = document.querySelectorAll(".carousel-dot");
+
+        let currentIndex = 0;
+        const totalItems = carouselItems.length;
+
+        function updateCarousel() {
+          carouselItems.forEach((item, index) => {
+            item.classList.remove("active", "prev", "next");
+
+            if (index === currentIndex) {
+              item.classList.add("active");
+            } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
+              item.classList.add("prev");
+            } else if (index === (currentIndex + 1) % totalItems) {
+              item.classList.add("next");
+            }
+          });
+
+          carouselDots.forEach((dot, index) => {
+            dot.classList.toggle("bg-primary", index === currentIndex);
+            dot.classList.toggle("bg-gray-300", index !== currentIndex);
+          });
+        }
+
+        prevBtn.addEventListener("click", function () {
+          currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+          updateCarousel();
+        });
+
+        nextBtn.addEventListener("click", function () {
+          currentIndex = (currentIndex + 1) % totalItems;
+          updateCarousel();
+        });
+
+        carouselDots.forEach((dot, index) => {
+          dot.addEventListener("click", function () {
+            currentIndex = index;
+            updateCarousel();
+          });
+        });
+
+        // Auto rotation
+        let carouselInterval = setInterval(() => {
+          currentIndex = (currentIndex + 1) % totalItems;
+          updateCarousel();
+        }, 5000);
+
+        // Pause on hover
+        const carouselContainer = document.querySelector(".gallery-carousel");
+        carouselContainer.addEventListener("mouseenter", () => {
+          clearInterval(carouselInterval);
+        });
+
+        carouselContainer.addEventListener("mouseleave", () => {
+          carouselInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateCarousel();
+          }, 5000);
+        });
+      });
+    </script>
+
+    <script id="reviewCubeScript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const pauseButton = document.getElementById("pauseReviews");
+        const reviewCube = document.querySelector(".review-cube");
+
+        let isRotating = true;
+
+        pauseButton.addEventListener("click", function () {
+          if (isRotating) {
+            reviewCube.style.animationPlayState = "paused";
+            pauseButton.innerHTML =
+              '<i class="ri-play-line mr-2"></i><span>Resume Rotation</span>';
+          } else {
+            reviewCube.style.animationPlayState = "running";
+            pauseButton.innerHTML =
+              '<i class="ri-pause-line mr-2"></i><span>Pause Rotation</span>';
+          }
+          isRotating = !isRotating;
+        });
+      });
+    </script>
+  </body>
+</html>
